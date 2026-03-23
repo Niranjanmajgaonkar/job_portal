@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+<title>नोकरी महाराष्ट्र — Nokari Maharashtra</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --blue-50: #EFF6FF;
+    --blue-100: #DBEAFE;
+    --blue-200: #BFDBFE;
+    --blue-400: #60A5FA;
+    --blue-500: #3B82F6;
+    --blue-600: #2563EB;
+    --blue-700: #1D4ED8;
+    --blue-800: #1E40AF;
+    --blue-900: #1E3A8A;
+
+    --saffron: #F97316;
+    --saffron-light: #FFF7ED;
+    --saffron-dark: #C2410C;
+
+    --green-400: #34D399;
+    --green-500: #10B981;
+    --green-600: #059669;
+
+    --red-400: #F87171;
+    --red-500: #EF4444;
+    --red-600: #DC2626;
+    --red-50: #FEF2F2;
+
+    --gray-50: #F8FAFC;
+    --gray-100: #F1F5F9;
+    --gray-200: #E2E8F0;
+    --gray-300: #CBD5E1;
+    --gray-400: #94A3B8;
+    --gray-500: #64748B;
+    --gray-600: #475569;
+    --gray-700: #334155;
+    --gray-800: #1E293B;
+    --gray-900: #0F172A;
+
+    --font-marathi: 'Mukta', sans-serif;
+    --font-english: 'Poppins', sans-serif;
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 20px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--gray-50);
+    color: var(--gray-800);
+    font-family: var(--font-marathi);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  body.lang-en { font-family: var(--font-english); }
+
+  #root {
+    max-width: 430px;
+    margin: 0 auto;
+    min-height: 100vh;
+    background: var(--gray-50);
+    position: relative;
+    box-shadow: 0 0 40px rgba(0,0,0,0.12);
+  }
+
+  .page-scroll {
+    overflow-y: auto;
+    height: 100vh;
+    padding-bottom: 80px;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: #fff;
+    border-bottom: 1px solid var(--gray-100);
+    padding: 10px 16px 8px;
+  }
+
+  .header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .logo-icon {
+    width: 34px;
+    height: 34px;
+    background: linear-gradient(135deg, var(--blue-600), var(--blue-800));
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: var(--font-marathi);
+    letter-spacing: -0.5px;
+    flex-shrink: 0;
+  }
+
+  .logo-text {
+    line-height: 1.15;
+  }
+
+  .logo-text .primary { font-size: 14px; font-weight: 700; color: var(--blue-800); font-family: var(--font-marathi); }
+  .logo-text .sub { font-size: 10px; font-weight: 400; color: var(--gray-500); font-family: var(--font-english); letter-spacing: 0.3px; }
+
+  .lang-toggle {
+    display: flex;
+    align-items: center;
+    background: var(--gray-100);
+    border-radius: 20px;
+    padding: 3px;
+    gap: 2px;
+  }
+
+  .lang-btn {
+    padding: 4px 10px;
+    border-radius: 16px;
+    font-size: 12px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.2px;
+    font-family: var(--font-english);
+  }
+
+  .lang-btn.active {
+    background: var(--blue-600);
+    color: #fff;
+    box-shadow: 0 2px 6px rgba(37,99,235,0.3);
+  }
+
+  .lang-btn:not(.active) {
+    background: transparent;
+    color: var(--gray-500);
+  }
+
+  .search-bar {
+    display: flex;
+    align-items: center;
+    background: var(--gray-100);
+    border-radius: var(--radius-md);
+    padding: 9px 14px;
+    gap: 10px;
+    border: 1.5px solid transparent;
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .search-bar:focus-within {
+    background: #fff;
+    border-color: var(--blue-400);
+  }
+
+  .search-icon { color: var(--gray-400); font-size: 15px; flex-shrink: 0; }
+
+  .search-bar input {
+    background: none;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    font-family: var(--font-marathi);
+    color: var(--gray-700);
+    width: 100%;
+  }
+
+  .search-bar input::placeholder { color: var(--gray-400); }
+
+  .search-bar input.en { font-family: var(--font-english); }
+
+  .mic-btn {
+    background: var(--blue-600);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 13px;
+    flex-shrink: 0;
+  }
+
+  /* ── NOTIFICATION BANNER ── */
+  .notif-banner {
+    background: linear-gradient(90deg, var(--blue-700), var(--blue-900));
+    color: #fff;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12.5px;
+    font-weight: 500;
+  }
+
+  .notif-dot { width: 6px; height: 6px; background: var(--saffron); border-radius: 50%; flex-shrink: 0; animation: pulse 1.5s infinite; }
+
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.6;transform:scale(1.3)} }
+
+  /* ── SECTION TITLE ── */
+  .section-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--gray-800);
+    padding: 18px 16px 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .section-title .badge {
+    background: var(--blue-100);
+    color: var(--blue-700);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 10px;
+    font-family: var(--font-english);
+  }
+
+  /* ── QUICK TILES ── */
+  .quick-tiles {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    padding: 0 16px;
+  }
+
+  .tile {
+    background: #fff;
+    border-radius: var(--radius-lg);
+    padding: 16px 14px;
+    border: 1.5px solid var(--gray-100);
+    cursor: pointer;
+    transition: all 0.18s;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .tile:active { transform: scale(0.97); }
+  .tile:hover { border-color: var(--blue-200); box-shadow: 0 4px 16px rgba(37,99,235,0.10); }
+
+  .tile-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    margin-bottom: 2px;
+  }
+
+  .tile.results .tile-icon { background: #EFF6FF; }
+  .tile.admit .tile-icon { background: #F0FDF4; }
+  .tile.new-jobs .tile-icon { background: #FFF7ED; }
+  .tile.district .tile-icon { background: #FDF4FF; }
+
+  .tile-label-mr { font-size: 15px; font-weight: 700; color: var(--gray-800); font-family: var(--font-marathi); line-height: 1.3; }
+  .tile-label-en { font-size: 11px; font-weight: 500; color: var(--gray-400); font-family: var(--font-english); }
+
+  .tile-count {
+    font-size: 11px;
+    font-weight: 600;
+    font-family: var(--font-english);
+    padding: 3px 8px;
+    border-radius: 8px;
+    align-self: flex-start;
+    margin-top: 2px;
+  }
+
+  .tile.results .tile-count { background: var(--blue-100); color: var(--blue-700); }
+  .tile.admit .tile-count { background: #dcfce7; color: #15803d; }
+  .tile.new-jobs .tile-count { background: #ffedd5; color: var(--saffron-dark); }
+  .tile.district .tile-count { background: #f3e8ff; color: #7c3aed; }
+
+  .tile-arrow { position: absolute; top: 14px; right: 14px; color: var(--gray-300); font-size: 14px; }
+
+  /* ── FILTER SECTION ── */
+  .filter-section {
+    padding: 0 16px 4px;
+  }
+
+  .filter-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .filter-select-wrap {
+    flex: 1;
+    min-width: 90px;
+    position: relative;
+  }
+
+  .filter-label {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--gray-500);
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    font-family: var(--font-english);
+  }
+
+  .filter-select {
+    width: 100%;
+    padding: 9px 28px 9px 10px;
+    border-radius: var(--radius-sm);
+    border: 1.5px solid var(--gray-200);
+    background: #fff;
+    font-size: 12.5px;
+    font-family: var(--font-marathi);
+    color: var(--gray-700);
+    appearance: none;
+    cursor: pointer;
+    font-weight: 500;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .filter-select:focus { border-color: var(--blue-400); }
+
+  .filter-chevron {
+    position: absolute;
+    right: 9px;
+    bottom: 11px;
+    color: var(--gray-400);
+    font-size: 11px;
+    pointer-events: none;
+  }
+
+  .search-btn {
+    background: var(--blue-600);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 9px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: var(--font-marathi);
+    white-space: nowrap;
+    align-self: flex-end;
+    transition: background 0.2s;
+    letter-spacing: 0.2px;
+  }
+
+  .search-btn:active { background: var(--blue-700); transform: scale(0.97); }
+
+  /* ── JOB CARDS ── */
+  .jobs-list { padding: 0 16px 10px; display: flex; flex-direction: column; gap: 10px; }
+
+  .job-card {
+    background: #fff;
+    border-radius: var(--radius-lg);
+    border: 1.5px solid var(--gray-100);
+    padding: 14px;
+    cursor: pointer;
+    transition: all 0.18s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .job-card:hover { border-color: var(--blue-200); box-shadow: 0 4px 16px rgba(37,99,235,0.08); }
+  .job-card:active { transform: scale(0.99); }
+
+  .job-card.ad-card { border-color: #fef3c7; background: #fffdf5; }
+  .job-card.ad-card::before {
+    content: 'Sponsored';
+    position: absolute; top: 10px; right: 10px;
+    font-size: 9px; font-weight: 600;
+    background: #fef3c7; color: #92400e;
+    padding: 2px 6px; border-radius: 6px;
+    font-family: var(--font-english);
+    letter-spacing: 0.3px;
+  }
+
+  .urgent-stripe {
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 3.5px;
+    background: var(--red-500);
+    border-radius: 16px 0 0 16px;
+  }
+
+  .job-card.urgent { padding-left: 16px; }
+
+  .card-top {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .org-avatar {
+    width: 42px; height: 42px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+    border: 1px solid var(--gray-100);
+  }
+
+  .card-meta { flex: 1; min-width: 0; }
+
+  .card-org {
+    font-size: 11px; font-weight: 600;
+    color: var(--gray-400);
+    font-family: var(--font-english);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    margin-bottom: 3px;
+    display: flex; align-items: center; gap: 5px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+
+  .verified-badge {
+    display: inline-flex; align-items: center; gap: 2px;
+    background: #dcfce7; color: #15803d;
+    font-size: 9.5px; font-weight: 700;
+    padding: 2px 5px; border-radius: 5px;
+    letter-spacing: 0.2px; font-family: var(--font-english);
+    flex-shrink: 0;
+  }
+
+  .card-title {
+    font-size: 14.5px; font-weight: 700;
+    color: var(--gray-800);
+    line-height: 1.35;
+    font-family: var(--font-marathi);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+
+  .card-title.en { font-family: var(--font-english); font-size: 13.5px; }
+
+  .save-btn {
+    background: none; border: none; cursor: pointer;
+    color: var(--gray-300);
+    font-size: 18px;
+    padding: 2px;
+    flex-shrink: 0;
+    transition: color 0.15s;
+  }
+
+  .save-btn.saved { color: var(--blue-500); }
+
+  .card-tags {
+    display: flex; flex-wrap: wrap; gap: 5px;
+    margin-bottom: 10px;
+  }
+
+  .tag {
+    font-size: 11px; font-weight: 500;
+    padding: 3px 8px; border-radius: 6px;
+    font-family: var(--font-english);
+    display: flex; align-items: center; gap: 3px;
+  }
+
+  .tag.vacancies { background: var(--blue-50); color: var(--blue-700); }
+  .tag.location { background: var(--gray-100); color: var(--gray-600); }
+  .tag.edu { background: #f3e8ff; color: #6b21a8; }
+  .tag.salary { background: #f0fdf4; color: #166534; }
+
+  .card-footer {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-top: 10px;
+    border-top: 1px solid var(--gray-100);
+  }
+
+  .last-date-wrap { display: flex; flex-direction: column; gap: 1px; }
+  .last-date-label { font-size: 10px; font-weight: 500; color: var(--gray-400); font-family: var(--font-english); }
+  .last-date-value { font-size: 12px; font-weight: 700; color: var(--red-600); font-family: var(--font-english); }
+  .last-date-value.safe { color: var(--green-600); }
+  .last-date-value.warning { color: #d97706; }
+
+  .apply-btn {
+    background: var(--blue-600);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: var(--font-marathi);
+    cursor: pointer;
+    transition: background 0.18s, transform 0.1s;
+    letter-spacing: 0.2px;
+  }
+
+  .apply-btn:active { background: var(--blue-700); transform: scale(0.97); }
+
+  .new-tag {
+    position: absolute; top: -1px; right: 16px;
+    background: var(--saffron);
+    color: #fff;
+    font-size: 9px; font-weight: 700;
+    padding: 3px 7px;
+    border-radius: 0 0 6px 6px;
+    font-family: var(--font-english);
+    letter-spacing: 0.5px;
+  }
+
+  /* ── STATE JOBS PROMO ── */
+  .promo-banner {
+    margin: 4px 16px 10px;
+    background: linear-gradient(135deg, var(--blue-700), var(--blue-900));
+    border-radius: var(--radius-lg);
+    padding: 16px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .promo-banner::after {
+    content: '';
+    position: absolute; right: -20px; top: -20px;
+    width: 100px; height: 100px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 50%;
+  }
+
+  .promo-icon { font-size: 32px; flex-shrink: 0; }
+  .promo-text .big { font-size: 15px; font-weight: 700; margin-bottom: 3px; }
+  .promo-text .small { font-size: 12px; opacity: 0.8; font-family: var(--font-english); }
+  .promo-arrow { margin-left: auto; font-size: 20px; opacity: 0.7; }
+
+  /* ── BOTTOM NAV ── */
+  .bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 430px;
+    background: #fff;
+    border-top: 1px solid var(--gray-100);
+    display: flex;
+    align-items: center;
+    padding: 0;
+    z-index: 200;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.07);
+  }
+
+  .nav-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    padding: 8px 6px 10px;
+    cursor: pointer;
+    border: none;
+    background: none;
+    transition: all 0.15s;
+    position: relative;
+  }
+
+  .nav-icon { font-size: 20px; transition: transform 0.15s; }
+  .nav-label { font-size: 10.5px; font-weight: 500; color: var(--gray-400); font-family: var(--font-english); transition: color 0.15s; }
+  .nav-label.mr { font-family: var(--font-marathi); font-size: 11px; }
+
+  .nav-item.active .nav-icon { transform: translateY(-1px); }
+  .nav-item.active .nav-label { color: var(--blue-600); font-weight: 700; }
+
+  .nav-indicator {
+    position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+    width: 24px; height: 3px;
+    background: var(--blue-600);
+    border-radius: 0 0 3px 3px;
+  }
+
+  .nav-whatsapp { background: #25D366 !important; color: #fff !important; }
+
+  .nav-item.whatsapp .nav-icon-wrap {
+    background: #25D366;
+    border-radius: 12px;
+    width: 40px; height: 34px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    margin-bottom: 2px;
+    box-shadow: 0 3px 10px rgba(37,211,102,0.35);
+  }
+
+  .nav-item.whatsapp .nav-label { color: #25D366; font-weight: 700; }
+
+  .notif-count {
+    position: absolute; top: 6px; right: calc(50% - 18px);
+    background: var(--red-500); color: #fff;
+    font-size: 9px; font-weight: 700;
+    font-family: var(--font-english);
+    min-width: 16px; height: 16px;
+    padding: 0 4px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    border: 2px solid #fff;
+  }
+
+  /* ── TOAST ── */
+  .toast {
+    position: fixed;
+    bottom: 90px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--gray-900);
+    color: #fff;
+    font-size: 13px;
+    padding: 10px 18px;
+    border-radius: 20px;
+    opacity: 0;
+    transition: all 0.3s;
+    z-index: 999;
+    white-space: nowrap;
+    font-family: var(--font-marathi);
+    pointer-events: none;
+  }
+
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  /* ── SKELETON LOADER ── */
+  .skeleton { background: var(--gray-100); border-radius: 6px; animation: shimmer 1.4s infinite; }
+  @keyframes shimmer {
+    0% { opacity: 1 } 50% { opacity: 0.5 } 100% { opacity: 1 }
+  }
+
+  /* ── SCROLL CHIPS ── */
+  .chips-scroll {
+    display: flex; gap: 8px;
+    overflow-x: auto; padding: 4px 16px 8px;
+    scrollbar-width: none;
+  }
+  .chips-scroll::-webkit-scrollbar { display: none; }
+
+  .chip {
+    flex-shrink: 0;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12.5px; font-weight: 500;
+    border: 1.5px solid var(--gray-200);
+    background: #fff;
+    color: var(--gray-600);
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: var(--font-marathi);
+    white-space: nowrap;
+  }
+
+  .chip.active {
+    background: var(--blue-600); color: #fff;
+    border-color: var(--blue-600);
+    box-shadow: 0 2px 8px rgba(37,99,235,0.25);
+  }
+
+  /* ── DEPT SCROLL ── */
+  .dept-scroll {
+    display: flex; gap: 10px;
+    overflow-x: auto; padding: 4px 16px 12px;
+    scrollbar-width: none;
+  }
+  .dept-scroll::-webkit-scrollbar { display: none; }
+
+  .dept-card {
+    flex-shrink: 0;
+    width: 76px;
+    background: #fff;
+    border: 1.5px solid var(--gray-100);
+    border-radius: var(--radius-md);
+    padding: 12px 8px;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 6px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .dept-card:active { transform: scale(0.96); }
+  .dept-card:hover { border-color: var(--blue-200); }
+
+  .dept-icon { font-size: 24px; }
+  .dept-name { font-size: 10.5px; font-weight: 600; color: var(--gray-700); text-align: center; line-height: 1.3; font-family: var(--font-marathi); }
+
+  /* ── SECTION HEADER ── */
+  .section-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 16px 8px;
+  }
+
+  .section-header h2 { font-size: 15px; font-weight: 700; color: var(--gray-800); }
+  .see-all { font-size: 12.5px; font-weight: 600; color: var(--blue-600); font-family: var(--font-english); background: none; border: none; cursor: pointer; }
+
+  /* ── EMPTY STATE ── */
+  .empty { text-align: center; padding: 40px 20px; color: var(--gray-400); }
+  .empty .icon { font-size: 40px; margin-bottom: 10px; }
+  .empty p { font-size: 14px; }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .job-card { animation: fadeInUp 0.3s ease both; }
+  .job-card:nth-child(1) { animation-delay: 0.05s; }
+  .job-card:nth-child(2) { animation-delay: 0.1s; }
+  .job-card:nth-child(3) { animation-delay: 0.15s; }
+  .job-card:nth-child(4) { animation-delay: 0.2s; }
+  .job-card:nth-child(5) { animation-delay: 0.25s; }
+  .job-card:nth-child(6) { animation-delay: 0.3s; }
+
+  .tile { animation: fadeInUp 0.25s ease both; }
+  .tile:nth-child(1) { animation-delay: 0.08s; }
+  .tile:nth-child(2) { animation-delay: 0.12s; }
+  .tile:nth-child(3) { animation-delay: 0.16s; }
+  .tile:nth-child(4) { animation-delay: 0.20s; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel">
+const { useState, useEffect, useRef } = React;
+
+const T = {
+  mr: {
+    appName: "नोकरी महाराष्ट्र",
+    tagline: "सरकारी व खाजगी नोकऱ्या",
+    searchPlaceholder: "नोकरी, विभाग, जिल्हा शोधा...",
+    newNotice: "नवीन: MPSC राज्यसेवा 2025 परीक्षा जाहिरात प्रकाशित झाली!",
+    quickActions: "झटपट कृती",
+    tiles: [
+      { mr: "निकाल", en: "Results", icon: "📋", count: "128 नवीन", cls: "results" },
+      { mr: "प्रवेशपत्र", en: "Admit Card", icon: "🎫", count: "45 उपलब्ध", cls: "admit" },
+      { mr: "नवीन जाहिराती", en: "New Jobs", icon: "💼", count: "312 आज", cls: "new-jobs" },
+      { mr: "माझा जिल्हा", en: "My District", icon: "📍", count: "89 जिल्हा", cls: "district" },
+    ],
+    filterTitle: "नोकरी शोधा",
+    eduLabel: "शिक्षण",
+    distLabel: "जिल्हा",
+    typeLabel: "नोकरी प्रकार",
+    filterBtn: "🔍  शोधा",
+    browseByDept: "विभागानुसार",
+    latestJobs: "ताज्या नोकऱ्या",
+    seeAll: "सर्व पहा",
+    promoTitle: "महाराष्ट्र शासन नोकऱ्या",
+    promoSub: "1,200+ सरकारी पदे उपलब्ध",
+    lastDate: "अर्ज शेवटची तारीख",
+    applyBtn: "अर्ज करा",
+    saveBtn: "जतन केले",
+    navHome: "मुख्यपृष्ठ",
+    navSaved: "जतन",
+    navWhatsApp: "अलर्ट",
+    navProfile: "प्रोफाइल",
+    toastSaved: "✓ नोकरी जतन केली",
+    toastRemoved: "नोकरी काढली",
+    vacancies: "पद",
+  },
+  en: {
+    appName: "Nokari Maharashtra",
+    tagline: "Govt & Private Jobs",
+    searchPlaceholder: "Search jobs, dept, district...",
+    newNotice: "New: MPSC State Service 2025 Exam notification published!",
+    quickActions: "Quick Actions",
+    tiles: [
+      { mr: "Results", en: "Results", icon: "📋", count: "128 New", cls: "results" },
+      { mr: "Admit Card", en: "Admit Card", icon: "🎫", count: "45 Available", cls: "admit" },
+      { mr: "New Jobs", en: "New Jobs", icon: "💼", count: "312 Today", cls: "new-jobs" },
+      { mr: "My District", en: "District", icon: "📍", count: "89 Near Me", cls: "district" },
+    ],
+    filterTitle: "Search Jobs",
+    eduLabel: "Education",
+    distLabel: "District",
+    typeLabel: "Job Type",
+    filterBtn: "🔍  Search",
+    browseByDept: "By Department",
+    latestJobs: "Latest Jobs",
+    seeAll: "See All",
+    promoTitle: "Maharashtra Govt Jobs",
+    promoSub: "1,200+ Govt posts available",
+    lastDate: "Last Date to Apply",
+    applyBtn: "Apply Now",
+    saveBtn: "Saved",
+    navHome: "Home",
+    navSaved: "Saved",
+    navWhatsApp: "Alerts",
+    navProfile: "Profile",
+    toastSaved: "✓ Job Saved",
+    toastRemoved: "Job Removed",
+    vacancies: "Posts",
+  }
+};
+
+const DEPTS = [
+  { icon: "🏛️", mr: "महसूल विभाग", en: "Revenue" },
+  { icon: "🚔", mr: "पोलीस", en: "Police" },
+  { icon: "🏥", mr: "आरोग्य", en: "Health" },
+  { icon: "🎓", mr: "शिक्षण", en: "Education" },
+  { icon: "🌾", mr: "कृषी", en: "Agriculture" },
+  { icon: "⚡", mr: "ऊर्जा", en: "Energy" },
+  { icon: "🏗️", mr: "बांधकाम", en: "PWD" },
+];
+
+const JOBS = [
+  {
+    id: 1,
+    org: "Maharashtra Public Service Commission",
+    orgShort: "MPSC",
+    titleMr: "राज्यसेवा परीक्षा 2025",
+    titleEn: "State Service Exam 2025",
+    icon: "🏛️",
+    iconBg: "#EFF6FF",
+    vacancies: 796,
+    location: "महाराष्ट्र सर्व",
+    locationEn: "All Maharashtra",
+    edu: "Graduation",
+    salary: "₹56,100+",
+    lastDate: "2025-06-15",
+    isNew: true,
+    isUrgent: false,
+    isVerified: true,
+    isAd: false,
+    dept: "results",
+  },
+  {
+    id: 2,
+    org: "Maharashtra Police Recruitment",
+    orgShort: "MH Police",
+    titleMr: "पोलीस भरती 2025",
+    titleEn: "Police Recruitment 2025",
+    icon: "🚔",
+    iconBg: "#F0FDF4",
+    vacancies: 17471,
+    location: "नागपूर, पुणे, मुंबई",
+    locationEn: "Nagpur, Pune, Mumbai",
+    edu: "12th Pass",
+    salary: "₹41,800+",
+    lastDate: "2025-05-30",
+    isNew: true,
+    isUrgent: true,
+    isVerified: true,
+    isAd: false,
+    dept: "new-jobs",
+  },
+  {
+    id: 3,
+    org: "National Health Mission — Maharashtra",
+    orgShort: "NHM Maharashtra",
+    titleMr: "CHO भरती 2025",
+    titleEn: "Community Health Officer",
+    icon: "🏥",
+    iconBg: "#FFF1F2",
+    vacancies: 3382,
+    location: "ग्रामीण महाराष्ट्र",
+    locationEn: "Rural Maharashtra",
+    edu: "B.Sc Nursing / BAMS",
+    salary: "₹25,000+",
+    lastDate: "2025-05-10",
+    isNew: false,
+    isUrgent: true,
+    isVerified: true,
+    isAd: false,
+    dept: "new-jobs",
+  },
+  {
+    id: 4,
+    org: "Maharashtra Gramin Bank",
+    orgShort: "MGB",
+    titleMr: "बँक ऑफिसर भरती",
+    titleEn: "Bank Officer Recruitment",
+    icon: "🏦",
+    iconBg: "#FFFBEB",
+    vacancies: 1432,
+    location: "औरंगाबाद, नाशिक",
+    locationEn: "Aurangabad, Nashik",
+    edu: "Graduation",
+    salary: "₹36,000+",
+    lastDate: "2025-07-20",
+    isNew: false,
+    isUrgent: false,
+    isVerified: true,
+    isAd: true,
+    dept: "district",
+  },
+  {
+    id: 5,
+    org: "Zilla Parishad Nashik",
+    orgShort: "ZP Nashik",
+    titleMr: "जिल्हा परिषद भरती 2025",
+    titleEn: "ZP Nashik Recruitment",
+    icon: "🏢",
+    iconBg: "#F3E8FF",
+    vacancies: 524,
+    location: "नाशिक जिल्हा",
+    locationEn: "Nashik District",
+    edu: "10th / 12th Pass",
+    salary: "₹19,900+",
+    lastDate: "2025-05-05",
+    isNew: false,
+    isUrgent: true,
+    isVerified: true,
+    isAd: false,
+    dept: "district",
+  },
+  {
+    id: 6,
+    org: "Maharashtra SSC Board",
+    orgShort: "MSCERT",
+    titleMr: "शिक्षक भरती 2025",
+    titleEn: "Teacher Recruitment 2025",
+    icon: "🎓",
+    iconBg: "#F0FDF4",
+    vacancies: 890,
+    location: "महाराष्ट्र",
+    locationEn: "Maharashtra",
+    edu: "B.Ed / D.El.Ed",
+    salary: "₹38,600+",
+    lastDate: "2025-08-01",
+    isNew: true,
+    isUrgent: false,
+    isVerified: true,
+    isAd: false,
+    dept: "new-jobs",
+  },
+];
+
+const EDU_OPTIONS = {
+  mr: ["सर्व शिक्षण", "10वी उत्तीर्ण", "12वी उत्तीर्ण", "पदवीधर", "पदव्युत्तर", "ITI / Diploma"],
+  en: ["All Education", "10th Pass", "12th Pass", "Graduate", "Post Graduate", "ITI / Diploma"],
+};
+
+const DIST_OPTIONS = {
+  mr: ["सर्व जिल्हे", "मुंबई", "पुणे", "नाशिक", "नागपूर", "औरंगाबाद", "कोल्हापूर", "सातारा"],
+  en: ["All Districts", "Mumbai", "Pune", "Nashik", "Nagpur", "Aurangabad", "Kolhapur", "Satara"],
+};
+
+const TYPE_OPTIONS = {
+  mr: ["सर्व प्रकार", "सरकारी", "निमसरकारी", "खाजगी", "बँकिंग", "रेल्वे"],
+  en: ["All Types", "Govt", "Semi-Govt", "Private", "Banking", "Railway"],
+};
+
+function getDateStatus(dateStr) {
+  const today = new Date();
+  const last = new Date(dateStr);
+  const diff = Math.ceil((last - today) / (1000 * 60 * 60 * 24));
+  if (diff < 0) return { cls: "last-date-value", label: "Expired" };
+  if (diff <= 10) return { cls: "last-date-value", label: `${diff} days left` };
+  if (diff <= 30) return { cls: "last-date-value warning", label: last.toLocaleDateString("en-IN", { day: "2-digit", month: "short" }) };
+  return { cls: "last-date-value safe", label: last.toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "2-digit" }) };
+}
+
+function JobCard({ job, lang, onSave, isSaved, t }) {
+  const dateStatus = getDateStatus(job.lastDate);
+  const title = lang === "mr" ? job.titleMr : job.titleEn;
+  const location = lang === "mr" ? job.location : job.locationEn;
+
+  return (
+    <div className={`job-card ${job.isUrgent ? "urgent" : ""} ${job.isAd ? "ad-card" : ""}`}>
+      {job.isUrgent && <div className="urgent-stripe" />}
+      {job.isNew && <div className="new-tag">NEW</div>}
+
+      <div className="card-top">
+        <div className="org-avatar" style={{ background: job.iconBg }}>{job.icon}</div>
+        <div className="card-meta">
+          <div className="card-org">
+            <span style={{ overflow: "hidden", textOverflow: "ellipsis" }}>{job.orgShort}</span>
+            {job.isVerified && (
+              <span className="verified-badge">✓ Verified</span>
+            )}
+          </div>
+          <div className={`card-title ${lang === "en" ? "en" : ""}`}>{title}</div>
+        </div>
+        <button
+          className={`save-btn ${isSaved ? "saved" : ""}`}
+          onClick={(e) => { e.stopPropagation(); onSave(job.id); }}
+          title="Save Job"
+        >
+          {isSaved ? "🔖" : "🔖"}
+        </button>
+      </div>
+
+      <div className="card-tags">
+        <span className="tag vacancies">👥 {job.vacancies.toLocaleString("en-IN")} {t.vacancies}</span>
+        <span className="tag location">📍 {location}</span>
+        <span className="tag edu">🎓 {job.edu}</span>
+        <span className="tag salary">💰 {job.salary}</span>
+      </div>
+
+      <div className="card-footer">
+        <div className="last-date-wrap">
+          <span className="last-date-label">{t.lastDate}</span>
+          <span className={dateStatus.cls}>{dateStatus.label}</span>
+        </div>
+        <button className="apply-btn">{t.applyBtn} →</button>
+      </div>
+    </div>
+  );
+}
+
+function App() {
+  const [lang, setLang] = useState("mr");
+  const [activeNav, setActiveNav] = useState(0);
+  const [savedJobs, setSavedJobs] = useState(new Set());
+  const [toast, setToast] = useState({ show: false, msg: "" });
+  const [activeChip, setActiveChip] = useState(0);
+  const [edu, setEdu] = useState(0);
+  const [dist, setDist] = useState(0);
+  const [type, setType] = useState(0);
+  const toastTimer = useRef(null);
+  const t = T[lang];
+
+  const chips = lang === "mr"
+    ? ["सर्व", "सरकारी", "बँकिंग", "रेल्वे", "आरोग्य", "शिक्षण"]
+    : ["All", "Govt", "Banking", "Railway", "Health", "Education"];
+
+  function showToast(msg) {
+    if (toastTimer.current) clearTimeout(toastTimer.current);
+    setToast({ show: true, msg });
+    toastTimer.current = setTimeout(() => setToast({ show: false, msg: "" }), 2000);
+  }
+
+  function toggleSave(id) {
+    setSavedJobs(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) { next.delete(id); showToast(t.toastRemoved); }
+      else { next.add(id); showToast(t.toastSaved); }
+      return next;
+    });
+  }
+
+  const filteredJobs = JOBS.filter(j => activeChip === 0 || true);
+
+  return (
+    <div style={{ position: "relative" }}>
+      {/* Header */}
+      <header className="header">
+        <div className="header-top">
+          <div className="logo">
+            <div className="logo-icon">न</div>
+            <div className="logo-text">
+              <div className="primary">{t.appName}</div>
+              <div className="sub">{t.tagline}</div>
+            </div>
+          </div>
+          <div className="lang-toggle">
+            <button className={`lang-btn ${lang === "mr" ? "active" : ""}`} onClick={() => setLang("mr")}>मराठी</button>
+            <button className={`lang-btn ${lang === "en" ? "active" : ""}`} onClick={() => setLang("en")}>EN</button>
+          </div>
+        </div>
+        <div className="search-bar">
+          <span className="search-icon">🔍</span>
+          <input
+            type="text"
+            placeholder={t.searchPlaceholder}
+            className={lang === "en" ? "en" : ""}
+          />
+          <button className="mic-btn">🎤</button>
+        </div>
+      </header>
+
+      {/* Notification Banner */}
+      <div className="notif-banner">
+        <div className="notif-dot" />
+        <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+          {t.newNotice}
+        </span>
+        <span style={{ marginLeft: "auto", flexShrink: 0, fontSize: 14 }}>→</span>
+      </div>
+
+      {/* Scrollable content */}
+      <div className="page-scroll" style={{ height: "auto" }}>
+
+        {/* Quick Action Tiles */}
+        <div style={{ padding: "16px 16px 0", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <h2 style={{ fontSize: 15, fontWeight: 700, color: "var(--gray-800)" }}>{t.quickActions}</h2>
+        </div>
+        <div style={{ padding: "10px 16px 0" }}>
+          <div className="quick-tiles">
+            {t.tiles.map((tile, i) => (
+              <div key={i} className={`tile ${tile.cls}`} onClick={() => {}}>
+                <div className="tile-icon">{tile.icon}</div>
+                <div className="tile-label-mr">{tile.mr}</div>
+                <div className="tile-label-en">{tile.en}</div>
+                <div className="tile-count">{tile.count}</div>
+                <span className="tile-arrow">›</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Promo Banner */}
+        <div className="promo-banner" style={{ marginTop: 16 }}>
+          <div className="promo-icon">🏛️</div>
+          <div className="promo-text">
+            <div className="big">{t.promoTitle}</div>
+            <div className="small">{t.promoSub}</div>
+          </div>
+          <div className="promo-arrow">›</div>
+        </div>
+
+        {/* Filter Section */}
+        <div style={{ padding: "16px 16px 0", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <h2 style={{ fontSize: 15, fontWeight: 700, color: "var(--gray-800)" }}>{t.filterTitle}</h2>
+        </div>
+        <div className="filter-section" style={{ paddingTop: 10 }}>
+          <div className="filter-row">
+            {[
+              { label: t.eduLabel, options: EDU_OPTIONS[lang], val: edu, set: setEdu },
+              { label: t.distLabel, options: DIST_OPTIONS[lang], val: dist, set: setDist },
+              { label: t.typeLabel, options: TYPE_OPTIONS[lang], val: type, set: setType },
+            ].map((f, i) => (
+              <div key={i} className="filter-select-wrap">
+                <div className="filter-label">{f.label}</div>
+                <select
+                  className="filter-select"
+                  value={f.val}
+                  onChange={e => f.set(Number(e.target.value))}
+                >
+                  {f.options.map((opt, j) => <option key={j} value={j}>{opt}</option>)}
+                </select>
+                <span className="filter-chevron">▼</span>
+              </div>
+            ))}
+          </div>
+          <div style={{ marginTop: 10 }}>
+            <button className="search-btn" style={{ width: "100%", padding: "11px", fontSize: 14 }}>{t.filterBtn}</button>
+          </div>
+        </div>
+
+        {/* Browse by Department */}
+        <div className="section-header" style={{ paddingTop: 20 }}>
+          <h2>{t.browseByDept}</h2>
+          <button className="see-all">{t.seeAll}</button>
+        </div>
+        <div className="dept-scroll">
+          {DEPTS.map((d, i) => (
+            <div key={i} className="dept-card">
+              <div className="dept-icon">{d.icon}</div>
+              <div className="dept-name">{lang === "mr" ? d.mr : d.en}</div>
+            </div>
+          ))}
+        </div>
+
+        {/* Category Chips */}
+        <div className="chips-scroll">
+          {chips.map((c, i) => (
+            <button key={i} className={`chip ${activeChip === i ? "active" : ""}`} onClick={() => setActiveChip(i)}>
+              {c}
+            </button>
+          ))}
+        </div>
+
+        {/* Latest Jobs */}
+        <div className="section-header">
+          <h2>{t.latestJobs}</h2>
+          <button className="see-all">{t.seeAll}</button>
+        </div>
+        <div className="jobs-list">
+          {filteredJobs.map(job => (
+            <JobCard
+              key={job.id}
+              job={job}
+              lang={lang}
+              onSave={toggleSave}
+              isSaved={savedJobs.has(job.id)}
+              t={t}
+            />
+          ))}
+        </div>
+
+        {/* Bottom padding for nav */}
+        <div style={{ height: 90 }} />
+      </div>
+
+      {/* Toast */}
+      <div className={`toast ${toast.show ? "show" : ""}`}>{toast.msg}</div>
+
+      {/* Bottom Navigation */}
+      <nav className="bottom-nav">
+        {[
+          { icon: "🏠", label: t.navHome, labelMr: true, badge: null },
+          { icon: "🔖", label: t.navSaved, labelMr: false, badge: savedJobs.size > 0 ? savedJobs.size : null },
+          { icon: "💬", label: t.navWhatsApp, labelMr: false, badge: null, isWA: true },
+          { icon: "👤", label: t.navProfile, labelMr: false, badge: null },
+        ].map((item, i) => (
+          <button
+            key={i}
+            className={`nav-item ${activeNav === i ? "active" : ""} ${item.isWA ? "whatsapp" : ""}`}
+            onClick={() => setActiveNav(i)}
+          >
+            {activeNav === i && !item.isWA && <div className="nav-indicator" />}
+            {item.badge !== null && item.badge > 0 && (
+              <div className="notif-count">{item.badge}</div>
+            )}
+            {item.isWA ? (
+              <div className="nav-icon-wrap">{item.icon}</div>
+            ) : (
+              <div className="nav-icon">{item.icon}</div>
+            )}
+            <div className={`nav-label ${item.labelMr ? "mr" : ""}`}
+              style={{ color: activeNav === i && !item.isWA ? "var(--blue-600)" : item.isWA ? "#25D366" : "var(--gray-400)" }}>
+              {item.label}
+            </div>
+          </button>
+        ))}
+      </nav>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+</script>
+</body>
+</html>
