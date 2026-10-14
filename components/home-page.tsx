@@ -27,12 +27,6 @@ const primaryCategories: QuickCategory[] = [
   { label: "सरकारी योजना", icon: "heart", color: "emerald", badge: "new", action: { kind: "tools", note: "सरकारी योजनांचा नमुना विभाग लवकरच येत आहे." } },
 ];
 
-/* Hidden until "navin shodha" reveals them. */
-const moreCategories: QuickCategory[] = [
-  { label: "अर्ज मार्गदर्शन", icon: "file", color: "blue", action: { kind: "panel", panel: "application" } },
-  { label: "जतन केलेल्या नोकऱ्या", icon: "bookmark", color: "rose", action: { kind: "listings" } },
-];
-
 const categoryBadge = (badge?: "hot" | "warn" | "new") => badge === "hot"
   ? <span className="category-badge category-badge-hot animate-pulse" aria-hidden="true">HOT</span>
   : badge === "warn"
@@ -111,7 +105,6 @@ export default function HomePage() {
   const [panel, setPanel] = useState<Panel>(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [mobileFilters, setMobileFilters] = useState(false);
-  const [showMoreCategories, setShowMoreCategories] = useState(false);
   const [toast, setToast] = useState("");
   const [alertEducation, setAlertEducation] = useState("");
   const [alertDistrict, setAlertDistrict] = useState("");
@@ -158,9 +151,9 @@ export default function HomePage() {
     switch (action.kind) {
       case "panel": setMenuOpen(false); setPanel(action.panel); break;
       case "listings": clearFilters(); showListings(); break;
-      case "education": clearFilters(); setTab("all"); setLimit(6); setShowMoreCategories(true); focusSearch(); break;
-      case "district": clearFilters(); setTab("all"); setLimit(6); setShowMoreCategories(true); focusSearch(); break;
-      case "department": clearFilters(); setTab("all"); setLimit(6); setShowMoreCategories(true); requestAnimationFrame(() => document.getElementById("departments")?.scrollIntoView({ behavior: scrollBehavior(), block: "start" })); break;
+      case "education": clearFilters(); setTab("all"); setLimit(6); focusSearch(); break;
+      case "district": clearFilters(); setTab("all"); setLimit(6); focusSearch(); break;
+      case "department": clearFilters(); setTab("all"); setLimit(6); requestAnimationFrame(() => document.getElementById("departments")?.scrollIntoView({ behavior: scrollBehavior(), block: "start" })); break;
       case "tools": setToast(action.note); break;
     }
   }
@@ -195,14 +188,6 @@ export default function HomePage() {
             <span className="category-label">{item.label}</span>
           </button>
         ))}</div>
-        {showMoreCategories && <div className="category-grid category-grid-more" aria-label="अधिक वर्ग">{moreCategories.map((item) => (
-          <button key={item.label} className="category-tile" onClick={() => runCategory(item.action)}>
-            {categoryBadge(item.badge)}
-            <span className={`category-icon category-icon-${item.color}`} aria-hidden="true"><Icon name={item.icon} size={28} /></span>
-            <span className="category-label">{item.label}</span>
-          </button>
-        ))}</div>}
-        <div className="category-toggle-row"><button type="button" className="secondary-button category-toggle" aria-expanded={showMoreCategories} onClick={() => setShowMoreCategories(!showMoreCategories)}>{showMoreCategories ? <>कमी वर्ग दाखवा <Icon name="chevron" size={16} style={{ transform: "rotate(-90deg)" }} /></> : <>नवीन शोधा — अधिक वर्ग <Icon name="chevron" size={16} style={{ transform: "rotate(90deg)" }} /></>}</button></div>
       </section>
 
       <section className="listings-section" id="latest-jobs"><div className="container"><div className="section-heading"><div><div className="section-kicker">संधी तुमच्यासाठी</div><h2 ref={listingsHeadingRef} tabIndex={-1}>ताज्या भरती, एकाच ठिकाणी<span className="heading-dot">.</span></h2></div><span className="demo-pill"><span />नमुना प्रिव्ह्यू</span></div><p className="demo-explanation">या प्रिव्ह्यूमधील पदे, जागा आणि तारखा नमुना आहेत. प्रत्यक्ष भरतीसाठी अधिकृत जाहिरात तपासा.</p><div className="listings-layout"><div className="listings-main"><div className="listings-toolbar"><div className="listing-tabs" role="group" aria-label="भरतीची यादी निवडा"><button className={tab === "all" ? "active" : ""} aria-pressed={tab === "all"} onClick={() => { setTab("all"); setLimit(6); }}>सर्व भरती <span>{numeral(jobs.length)}</span></button><button className={tab === "closing" ? "active" : ""} aria-pressed={tab === "closing"} onClick={() => { setTab("closing"); setLimit(6); }}>मुदत जवळ</button><button className={tab === "saved" ? "active" : ""} aria-pressed={tab === "saved"} onClick={() => { setTab("saved"); setLimit(6); }}><Icon name="bookmark" size={15} />जतन केलेल्या</button></div><label className="sort-control"><span className="sr-only">क्रमवारी</span><select value={sort} onChange={(e) => setSort(e.target.value)}><option value="latest">नवीन आधी</option><option value="deadline">अंतिम तारीख आधी</option></select></label></div><div className="results-meta" aria-live="polite"><span>{numeral(filteredJobs.length)} भरती {hasFilters ? "तुमच्या शोधानुसार" : tab === "saved" ? "जतन केलेल्या" : "उपलब्ध"}</span>{hasFilters && <button onClick={clearFilters}>फिल्टर्स काढा <Icon name="close" size={13} /></button>}</div>{hasFilters && <div className="active-filters">{query && <button onClick={() => setQuery("")}>{query}<Icon name="close" size={12} /></button>}{education && <button onClick={() => setEducation("")}>{education}<Icon name="close" size={12} /></button>}{district && <button onClick={() => setDistrict("")}>{district}<Icon name="close" size={12} /></button>}{department && <button onClick={() => setDepartment("")}>{department}<Icon name="close" size={12} /></button>}</div>}{filteredJobs.length > 0 && (
