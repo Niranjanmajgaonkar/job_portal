@@ -22,20 +22,14 @@ const primaryCategories: QuickCategory[] = [
   { label: "मेगाभरती", icon: "landmark", color: "red", badge: "hot", action: { kind: "tools", note: "मेगाभरतीचा नमुना विभाग लवकरच येत आहे." } },
   { label: "शिक्षणानुसार", icon: "graduate", color: "teal", action: { kind: "education", value: "" } },
   { label: "जिल्ह्यानुसार", icon: "pin", color: "indigo", action: { kind: "district" } },
-  { label: "व्यवसायानुसार", icon: "briefcase", color: "pink", action: { kind: "department" } },
   { label: "वय गणकयंत्र", icon: "clock", color: "cyan", badge: "new", action: { kind: "tools", note: "वय गणकयंत्राचा नमुना उपकरण विभाग लवकरच येत आहे." } },
   { label: "प्रश्नपत्रिका", icon: "library", color: "amber", action: { kind: "tools", note: "प्रश्नपत्रिकांचा नमुना विभाग लवकरच येत आहे." } },
   { label: "सरकारी योजना", icon: "heart", color: "emerald", badge: "new", action: { kind: "tools", note: "सरकारी योजनांचा नमुना विभाग लवकरच येत आहे." } },
-  { label: "शेवटची तारीख", icon: "calendar", color: "rose", badge: "warn", action: { kind: "panel", panel: "calendar" } },
 ];
 
 /* Hidden until "navin shodha" reveals them. */
 const moreCategories: QuickCategory[] = [
-  { label: "परीक्षा दिनदर्शिका", icon: "calendar", color: "orange", action: { kind: "panel", panel: "calendar" } },
-  { label: "कागदपत्रांची तयारी", icon: "book", color: "amber", action: { kind: "panel", panel: "documents" } },
   { label: "अर्ज मार्गदर्शन", icon: "file", color: "blue", action: { kind: "panel", panel: "application" } },
-  { label: "सुरक्षित अर्ज", icon: "shield", color: "green", action: { kind: "panel", panel: "safety" } },
-  { label: "जॉब अपडेट्स पसंती", icon: "bell", color: "purple", action: { kind: "panel", panel: "alerts" } },
   { label: "जतन केलेल्या नोकऱ्या", icon: "bookmark", color: "rose", action: { kind: "listings" } },
 ];
 
