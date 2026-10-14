@@ -19,6 +19,7 @@ The reports contain useful product ideas alongside broad competitor claims and d
 - Lead with clear Marathi language and a prominent recruitment search.
 - Make education, district, and department useful ways to discover opportunities.
 - Surface latest recruitment and approaching deadlines without making applicants open every listing.
+- The homepage quick-category grid leads with what users need most (all advertisements, results, admit cards, current affairs, mega recruitment, education/district/profession browsing, age calculator, previous papers, schemes, closing dates), and a "नवीन शोधा — अधिक वर्ग" button reveals additional utility options (exam calendar, document checklist, application guide, safe-application advice, alert preferences, saved jobs) below the primary set. Placeholder tools (current affairs, mega bharti, age calculator, question papers, schemes) show an honest sample-content toast until real sections exist.
 - Show the information needed for an initial decision: organization, vacancies, eligibility, location, and an absolute deadline.
 - Keep saved opportunities easy to revisit and distinguish recruitment from results and admit-card updates.
 - Use readable web content and clear detail links; an official PDF can remain a source reference rather than the only reading experience.

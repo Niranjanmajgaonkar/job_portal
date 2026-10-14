@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 
-export type IconName = "search" | "pin" | "arrow" | "chevron" | "bookmark" | "bell" | "check" | "shield" | "landmark" | "train" | "zap" | "building" | "heart" | "mail" | "trees" | "graduate" | "clock" | "calendar" | "users" | "file" | "ticket" | "book" | "close" | "menu" | "sliders" | "home" | "external" | "spark";
+export type IconName = "search" | "pin" | "arrow" | "chevron" | "bookmark" | "bell" | "check" | "shield" | "landmark" | "train" | "zap" | "building" | "heart" | "mail" | "trees" | "graduate" | "clock" | "calendar" | "users" | "file" | "ticket" | "book" | "close" | "menu" | "sliders" | "home" | "external" | "spark" | "briefcase" | "megaphone" | "library" | "chart";
 const paths: Record<IconName, React.ReactNode> = {
   search: <><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></>,
   pin: <><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></>,
@@ -30,6 +30,10 @@ const paths: Record<IconName, React.ReactNode> = {
   home: <><path d="m3 10 9-7 9 7v11H3V10Zm6 11v-8h6v8"/></>,
   external: <><path d="M14 3h7v7m0-7L11 13M10 3H3v18h18v-7"/></>,
   spark: <path d="m12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5L12 3Z"/>,
+  briefcase: <><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 12h18"/></>,
+  megaphone: <><path d="m4 10 12-6v16L4 14v-4Zm12 2h4M8 15v4a1.5 1.5 0 0 0 3 0v-2.5"/></>,
+  library: <><path d="M4 21V4h4v17M10 21V4h4v17m2 0 4-14 3 .8-4 13.2-3 0ZM2 21h20"/></>,
+  chart: <><path d="M4 20V10m5 10V4m5 16v-7m5 7V7M2 21h20"/></>,
 };
 
 export default function Icon({ name, size = 20, className = "", style }: { name: IconName; size?: number; className?: string; style?: CSSProperties }) {

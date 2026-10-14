@@ -95,3 +95,38 @@
   .job-row-summary { padding: 12px 10px; }
   .job-row-deadline { padding: 12px 6px; }
 }
+
+/* Quick category grid: primary categories first, extra options revealed by "नवीन शोधा". */
+.category-grid-section{padding-block:26px 30px}
+.category-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:14px}
+.category-grid+.category-grid{margin-top:14px;padding-top:14px;border-top:1px dashed #d7e1ee}
+.category-tile{position:relative;display:flex;flex-direction:column;align-items:center;padding:18px 8px 15px;background:#fff;border:1px solid var(--line);border-radius:12px;transition:border-color .2s,box-shadow .2s,transform .2s}
+.category-tile:hover{border-color:#b2c8e7;box-shadow:0 8px 20px #102e511a;transform:translateY(-2px)}
+.category-icon{display:flex;align-items:center;justify-content:center;width:56px;height:56px;border-radius:12px;border:2px solid;margin-bottom:9px;transition:transform .2s}
+.category-tile:hover .category-icon{transform:scale(1.08)}
+.category-label{font-size:12px;font-weight:700;color:#37455a;text-align:center;line-height:1.4}
+.category-tile:hover .category-label{color:#1f2d40}
+.category-badge{position:absolute;top:-8px;right:-6px;font-size:9px;font-weight:700;padding:2px 8px;border-radius:999px;box-shadow:0 2px 6px #102e5133;line-height:1.6}
+.category-badge-hot{background:#dc2626;color:#fff}
+.category-badge-warn{background:#fbbf24;color:#78350f}
+.category-badge-new{background:#2563eb;color:#fff}
+@keyframes category-pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.75;transform:scale(1.08)}}
+.animate-pulse{animation:category-pulse 1.6s ease-in-out infinite}
+.category-icon-blue{background:#eff6ff;border-color:#bfdbfe;color:#1d4ed8}
+.category-icon-green{background:#f0fdf4;border-color:#bbf7d0;color:#15803d}
+.category-icon-purple{background:#faf5ff;border-color:#e9d5ff;color:#7e22ce}
+.category-icon-orange{background:#fff7ed;border-color:#fed7aa;color:#c2410c}
+.category-icon-red{background:#fef2f2;border-color:#fecaca;color:#b91c1c}
+.category-icon-teal{background:#f0fdfa;border-color:#99f6e4;color:#0f766e}
+.category-icon-indigo{background:#eef2ff;border-color:#c7d2fe;color:#4338ca}
+.category-icon-pink{background:#fdf2f8;border-color:#fbcfe8;color:#be185d}
+.category-icon-cyan{background:#ecfeff;border-color:#a5f3fc;color:#0e7490}
+.category-icon-amber{background:#fffbeb;border-color:#fde68a;color:#b45309}
+.category-icon-emerald{background:#ecfdf5;border-color:#a7f3d0;color:#047857}
+.category-icon-rose{background:#fff1f2;border-color:#fecdd3;color:#be123c}
+.category-toggle-row{display:flex;justify-content:center;margin-top:18px}
+.category-toggle{display:flex;align-items:center;gap:8px;font-size:12px;padding:10px 22px;min-height:42px;border-radius:8px}
+@media(max-width:1150px){.category-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.category-label{font-size:11px}}
+@media(max-width:900px){.category-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.category-icon{width:50px;height:50px}}
+@media(max-width:700px){.category-grid-section{padding-block:20px 24px}.category-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.category-tile{padding:14px 6px 12px;border-radius:10px}.category-icon{width:46px;height:46px;border-radius:10px;margin-bottom:7px}.category-icon svg{width:23px;height:23px}.category-label{font-size:10px}.category-badge{top:-6px;right:-4px;font-size:8px;padding:1px 6px}}
+@media(max-width:370px){.category-grid{gap:8px}.category-label{font-size:9px}}

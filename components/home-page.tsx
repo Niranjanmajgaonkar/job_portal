@@ -8,8 +8,45 @@ import { jobs, districts, educationOptions, formatDate, getDeadlineStatus, isClo
 
 type ListingTab = "all" | "closing" | "saved";
 type Panel = "alerts" | "results" | "admit" | "calendar" | "documents" | "application" | "safety" | "about" | "privacy" | null;
+type CategoryAction = { kind: "panel"; panel: Panel } | { kind: "listings" } | { kind: "education"; value: string } | { kind: "district" } | { kind: "department" } | { kind: "tools"; note: string };
+type QuickCategory = { label: string; icon: IconName; color: string; badge?: "hot" | "warn" | "new"; action: CategoryAction };
 const numeral = (value: number) => new Intl.NumberFormat("mr-IN").format(value);
 const scrollBehavior = (): ScrollBehavior => window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
+
+/* Main categories first — what users need most appears before the rest. */
+const primaryCategories: QuickCategory[] = [
+  { label: "सर्व जाहिराती", icon: "file", color: "blue", action: { kind: "listings" } },
+  { label: "निकाल", icon: "chart", color: "green", action: { kind: "panel", panel: "results" } },
+  { label: "प्रवेशपत्र", icon: "ticket", color: "purple", action: { kind: "panel", panel: "admit" } },
+  { label: "चालू घडामोडी", icon: "megaphone", color: "orange", badge: "new", action: { kind: "tools", note: "चालू घडामोडींचा नमुना विभाग लवकरच येत आहे." } },
+  { label: "मेगाभरती", icon: "landmark", color: "red", badge: "hot", action: { kind: "tools", note: "मेगाभरतीचा नमुना विभाग लवकरच येत आहे." } },
+  { label: "शिक्षणानुसार", icon: "graduate", color: "teal", action: { kind: "education", value: "" } },
+  { label: "जिल्ह्यानुसार", icon: "pin", color: "indigo", action: { kind: "district" } },
+  { label: "व्यवसायानुसार", icon: "briefcase", color: "pink", action: { kind: "department" } },
+  { label: "वय गणकयंत्र", icon: "clock", color: "cyan", badge: "new", action: { kind: "tools", note: "वय गणकयंत्राचा नमुना उपकरण विभाग लवकरच येत आहे." } },
+  { label: "प्रश्नपत्रिका", icon: "library", color: "amber", action: { kind: "tools", note: "प्रश्नपत्रिकांचा नमुना विभाग लवकरच येत आहे." } },
+  { label: "सरकारी योजना", icon: "heart", color: "emerald", badge: "new", action: { kind: "tools", note: "सरकारी योजनांचा नमुना विभाग लवकरच येत आहे." } },
+  { label: "शेवटची तारीख", icon: "calendar", color: "rose", badge: "warn", action: { kind: "panel", panel: "calendar" } },
+];
+
+/* Hidden until "navin shodha" reveals them. */
+const moreCategories: QuickCategory[] = [
+  { label: "परीक्षा दिनदर्शिका", icon: "calendar", color: "orange", action: { kind: "panel", panel: "calendar" } },
+  { label: "कागदपत्रांची तयारी", icon: "book", color: "amber", action: { kind: "panel", panel: "documents" } },
+  { label: "अर्ज मार्गदर्शन", icon: "file", color: "blue", action: { kind: "panel", panel: "application" } },
+  { label: "सुरक्षित अर्ज", icon: "shield", color: "green", action: { kind: "panel", panel: "safety" } },
+  { label: "जॉब अपडेट्स पसंती", icon: "bell", color: "purple", action: { kind: "panel", panel: "alerts" } },
+  { label: "जतन केलेल्या नोकऱ्या", icon: "bookmark", color: "rose", action: { kind: "listings" } },
+];
+
+const categoryBadge = (badge?: "hot" | "warn" | "new") => badge === "hot"
+  ? <span className="category-badge category-badge-hot animate-pulse" aria-hidden="true">HOT</span>
+  : badge === "warn"
+    ? <span className="category-badge category-badge-warn" aria-hidden="true">⚠️</span>
+    : badge === "new"
+      ? <span className="category-badge category-badge-new" aria-hidden="true">NEW</span>
+      : null;
+
 const departmentItems: { label: string; value: string; icon: IconName; color: string }[] = [
   { label: "MPSC", value: "MPSC", icon: "landmark", color: "blue" },
   { label: "पोलीस भरती", value: "पोलीस", icon: "shield", color: "orange" },
@@ -80,6 +117,7 @@ export default function HomePage() {
   const [panel, setPanel] = useState<Panel>(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [mobileFilters, setMobileFilters] = useState(false);
+  const [showMoreCategories, setShowMoreCategories] = useState(false);
   const [toast, setToast] = useState("");
   const [alertEducation, setAlertEducation] = useState("");
   const [alertDistrict, setAlertDistrict] = useState("");
@@ -120,6 +158,19 @@ export default function HomePage() {
   function search(event: FormEvent) { event.preventDefault(); showListings("all"); setMobileFilters(false); }
   function chooseDepartment(value: string) { clearFilters(); setDepartment(value); showListings("all"); }
 
+  function focusSearch() { requestAnimationFrame(() => { searchRef.current?.scrollIntoView({ behavior: scrollBehavior(), block: "center" }); searchRef.current?.focus({ preventScroll: true }); }); }
+
+  function runCategory(action: CategoryAction) {
+    switch (action.kind) {
+      case "panel": setMenuOpen(false); setPanel(action.panel); break;
+      case "listings": clearFilters(); showListings(); break;
+      case "education": clearFilters(); setTab("all"); setLimit(6); setShowMoreCategories(true); focusSearch(); break;
+      case "district": clearFilters(); setTab("all"); setLimit(6); setShowMoreCategories(true); focusSearch(); break;
+      case "department": clearFilters(); setTab("all"); setLimit(6); setShowMoreCategories(true); requestAnimationFrame(() => document.getElementById("departments")?.scrollIntoView({ behavior: scrollBehavior(), block: "start" })); break;
+      case "tools": setToast(action.note); break;
+    }
+  }
+
   const normalizedQuery = query.trim().toLocaleLowerCase();
   const filteredJobs = jobs.filter((job) => {
     const text = [job.title, job.organization, job.shortName, job.department, job.location, ...job.tags, ...job.education].join(" ").toLocaleLowerCase();
@@ -142,7 +193,23 @@ export default function HomePage() {
 
       <div className="container search-container"><form className="search-panel" onSubmit={search} role="search" aria-label="नोकरी शोधा"><div className="search-panel-heading"><h2>तुमच्यासाठी योग्य नोकरी शोधा</h2><span>एक पाऊल तुमच्या स्वप्नांकडे.</span></div><div className="search-fields"><label className="keyword-field"><Icon name="search" size={21} /><span className="sr-only">नोकरी, पद किंवा विभाग</span><input ref={searchRef} type="search" placeholder="पद, विभाग किंवा नोकरीचे नाव..." value={query} onChange={(e) => { setQuery(e.target.value); setLimit(6); }} /></label><button type="button" className="mobile-filter-toggle" aria-expanded={mobileFilters} aria-controls="search-filters" onClick={() => setMobileFilters(!mobileFilters)}><Icon name="sliders" />फिल्टर्स{(education || district) && <span className="filter-dot" />}</button><div id="search-filters" className={`select-fields ${mobileFilters ? "filters-open" : ""}`}><label className="search-select"><Icon name="graduate" size={19} /><span className="sr-only">शैक्षणिक पात्रता</span><select value={education} onChange={(e) => { setEducation(e.target.value); setLimit(6); }}><option value="">तुमचे शिक्षण</option>{educationOptions.map((item) => <option key={item} value={item}>{item}</option>)}</select></label><label className="search-select"><Icon name="pin" size={18} /><span className="sr-only">जिल्हा निवडा</span><select value={district} onChange={(e) => { setDistrict(e.target.value); setLimit(6); }}><option value="">सर्व जिल्हे</option>{districts.map((item) => <option key={item} value={item}>{item}</option>)}</select></label></div><button type="submit" className="primary-button search-submit"><Icon name="search" size={18} />नोकरी शोधा<Icon name="arrow" size={17} /></button></div><div className="popular-searches"><span>लोकप्रिय शोध :</span>{["१०वी", "१२वी", "पदवी", "ITI / डिप्लोमा"].map((item) => <button type="button" className={education === item ? "selected" : ""} key={item} onClick={() => { setEducation(education === item ? "" : item); setLimit(6); setTab("all"); }}>{item}</button>)}<span className="search-note"><Icon name="spark" size={14} />तुमची संधी, तुमच्या अटींवर</span></div></form></div>
 
-      <section className="container quick-access" aria-label="झटपट दुवे"><button onClick={() => { clearFilters(); showListings(); }}><span className="quick-icon blue"><Icon name="file" size={22} /></span><span><strong>नवीन भरती</strong><small>संधींचा शोध घ्या</small></span><Icon name="arrow" size={17} /></button><button onClick={() => setPanel("results")}><span className="quick-icon green"><Icon name="landmark" size={22} /></span><span><strong>परीक्षांचे निकाल</strong><small>तुमचा निकाल तपासा</small></span><Icon name="arrow" size={17} /></button><button onClick={() => setPanel("admit")}><span className="quick-icon purple"><Icon name="ticket" size={22} /></span><span><strong>प्रवेशपत्रे</strong><small>परीक्षेची पुढची पायरी</small></span><Icon name="arrow" size={17} /></button><button onClick={() => setPanel("calendar")}><span className="quick-icon orange"><Icon name="calendar" size={22} /></span><span><strong>परीक्षा दिनदर्शिका</strong><small>तारखांचे नियोजन करा</small></span><Icon name="arrow" size={17} /></button></section>
+      <section className="container category-grid-section" id="vibhag" aria-label="झटपट वर्ग">
+        <div className="category-grid">{primaryCategories.map((item) => (
+          <button key={item.label} className="category-tile" onClick={() => runCategory(item.action)}>
+            {categoryBadge(item.badge)}
+            <span className={`category-icon category-icon-${item.color}`} aria-hidden="true"><Icon name={item.icon} size={28} /></span>
+            <span className="category-label">{item.label}</span>
+          </button>
+        ))}</div>
+        {showMoreCategories && <div className="category-grid category-grid-more" aria-label="अधिक वर्ग">{moreCategories.map((item) => (
+          <button key={item.label} className="category-tile" onClick={() => runCategory(item.action)}>
+            {categoryBadge(item.badge)}
+            <span className={`category-icon category-icon-${item.color}`} aria-hidden="true"><Icon name={item.icon} size={28} /></span>
+            <span className="category-label">{item.label}</span>
+          </button>
+        ))}</div>}
+        <div className="category-toggle-row"><button type="button" className="secondary-button category-toggle" aria-expanded={showMoreCategories} onClick={() => setShowMoreCategories(!showMoreCategories)}>{showMoreCategories ? <>कमी वर्ग दाखवा <Icon name="chevron" size={16} style={{ transform: "rotate(-90deg)" }} /></> : <>नवीन शोधा — अधिक वर्ग <Icon name="chevron" size={16} style={{ transform: "rotate(90deg)" }} /></>}</button></div>
+      </section>
 
       <section className="listings-section" id="latest-jobs"><div className="container"><div className="section-heading"><div><div className="section-kicker">संधी तुमच्यासाठी</div><h2 ref={listingsHeadingRef} tabIndex={-1}>ताज्या भरती, एकाच ठिकाणी<span className="heading-dot">.</span></h2></div><span className="demo-pill"><span />नमुना प्रिव्ह्यू</span></div><p className="demo-explanation">या प्रिव्ह्यूमधील पदे, जागा आणि तारखा नमुना आहेत. प्रत्यक्ष भरतीसाठी अधिकृत जाहिरात तपासा.</p><div className="listings-layout"><div className="listings-main"><div className="listings-toolbar"><div className="listing-tabs" role="group" aria-label="भरतीची यादी निवडा"><button className={tab === "all" ? "active" : ""} aria-pressed={tab === "all"} onClick={() => { setTab("all"); setLimit(6); }}>सर्व भरती <span>{numeral(jobs.length)}</span></button><button className={tab === "closing" ? "active" : ""} aria-pressed={tab === "closing"} onClick={() => { setTab("closing"); setLimit(6); }}>मुदत जवळ</button><button className={tab === "saved" ? "active" : ""} aria-pressed={tab === "saved"} onClick={() => { setTab("saved"); setLimit(6); }}><Icon name="bookmark" size={15} />जतन केलेल्या</button></div><label className="sort-control"><span className="sr-only">क्रमवारी</span><select value={sort} onChange={(e) => setSort(e.target.value)}><option value="latest">नवीन आधी</option><option value="deadline">अंतिम तारीख आधी</option></select></label></div><div className="results-meta" aria-live="polite"><span>{numeral(filteredJobs.length)} भरती {hasFilters ? "तुमच्या शोधानुसार" : tab === "saved" ? "जतन केलेल्या" : "उपलब्ध"}</span>{hasFilters && <button onClick={clearFilters}>फिल्टर्स काढा <Icon name="close" size={13} /></button>}</div>{hasFilters && <div className="active-filters">{query && <button onClick={() => setQuery("")}>{query}<Icon name="close" size={12} /></button>}{education && <button onClick={() => setEducation("")}>{education}<Icon name="close" size={12} /></button>}{district && <button onClick={() => setDistrict("")}>{district}<Icon name="close" size={12} /></button>}{department && <button onClick={() => setDepartment("")}>{department}<Icon name="close" size={12} /></button>}</div>}{filteredJobs.length > 0 && (
           <div className="job-list">
