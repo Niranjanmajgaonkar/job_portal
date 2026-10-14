@@ -6,3 +6,5 @@ j_practice links of RND -
 4 . https://docs.google.com/document/d/1eDEeZSkvMN9NUDAO-efQ2uSsO7KL7KLZ0qk46-1kCE0/edit?tab=t.0   -> doc
 https://gemini.google.com/app/b7161824e29b8d0d?utm_source=sem&utm_medium=paid-          media&utm_campaign=deepresearch_bkws&gclsrc=aw.ds&gad_source=1&gad_campaignid=22909912692&gbraid=0AAAAApk5BhmQPpKZy387JmXDKh_-j-W4T&gclid=Cj0KCQjwj47OBhCmARIsAF5wUEER6VqSjwafI5kFR97E8iPT2E9H7SNrhOFJJWsn95MF_-7Jl6rsI_gaAk4SEALw_wcB    -> gemini link 
 5 . https://pagespeed.web.dev/    -> for test the speed of the website
+6 . https://chatgpt.com/share/69ca4157-c9e0-8321-8876-e36ed53c6b1a
+7 . https://jobapply24.in/ -> refrence website  
